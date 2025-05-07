@@ -324,17 +324,17 @@ class RPALParser:
         """Parse Rn production"""
         if self.check(TokenType.IDENTIFIER):
             id_token = self.match(TokenType.IDENTIFIER)
-            return ASTNode('identifier', id_token.value)
+            return ASTNode(id_token.value)
         
         elif self.check(TokenType.INTEGER):
             int_token = self.match(TokenType.INTEGER)
-            return ASTNode('integer', int_token.value)
+            return ASTNode(int_token.value)
         
         elif self.check(TokenType.STRING):
             str_token = self.match(TokenType.STRING)
             # Remove the surrounding quotes from string literal
             string_value = str_token.value[1:-1]
-            return ASTNode('string', string_value)
+            return ASTNode(f'"{string_value}"')
         
         elif self.check(TokenType.KEYWORD, 'true'):
             self.match(TokenType.KEYWORD, 'true')
