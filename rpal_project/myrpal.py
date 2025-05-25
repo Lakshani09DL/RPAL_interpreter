@@ -25,10 +25,15 @@ def main():
 
         if mode == "-ast":
             ast_root.print_tree()  # Implement print_tree() in ASTNode to match rpal.exe output
-        #elif mode == "-eval":
+        elif mode == "-eval":
             #from cse_machine import evaluate  # if you have a CSE machine module
             #result = evaluate(ast_root)
             #print(result)
+            from standardizer.standardizer import standardize
+            standardized_ast = standardize(ast_root)
+
+            print("Standardized AST:")
+            standardized_ast.print_tree()
         else:
             print("Error: Invalid mode. Use -ast or -eval.")
             sys.exit(1)
