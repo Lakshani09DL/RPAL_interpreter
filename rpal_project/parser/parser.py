@@ -324,17 +324,17 @@ class RPALParser:
         """Parse Rn production"""
         if self.check(TokenType.IDENTIFIER):
             id_token = self.match(TokenType.IDENTIFIER)
-            return ASTNode(id_token.value)
+            return ASTNode(f"<ID:{id_token.value}>")
         
         elif self.check(TokenType.INTEGER):
             int_token = self.match(TokenType.INTEGER)
-            return ASTNode(int_token.value)
+            return ASTNode(f"<INT:{int_token.value}>")
         
         elif self.check(TokenType.STRING):
             str_token = self.match(TokenType.STRING)
             # Remove the surrounding quotes from string literal
             string_value = str_token.value[1:-1]
-            return ASTNode(f'"{string_value}"')
+            return ASTNode(f'<STR:{string_value}>')
         
         elif self.check(TokenType.KEYWORD, 'true'):
             self.match(TokenType.KEYWORD, 'true')
@@ -421,7 +421,7 @@ class RPALParser:
                 e_node = self.parse_E()
                 
                 fcn_node = ASTNode('fcn_form')
-                id_node = ASTNode('identifier', id_token.value)
+                id_node = ASTNode(f"<ID:{id_token.value}>")
                 fcn_node.add_child(id_node)
                 
                 for vb_node in vb_nodes:
@@ -455,7 +455,7 @@ class RPALParser:
         """Parse Vb production"""
         if self.check(TokenType.IDENTIFIER):
             id_token = self.match(TokenType.IDENTIFIER)
-            return ASTNode('identifier', id_token.value)
+            return ASTNode(f"<ID:{id_token.value}>")
         
         elif self.check(TokenType.PUNCTUATION, '('):
             self.match(TokenType.PUNCTUATION, '(')
@@ -476,7 +476,7 @@ class RPALParser:
             raise SyntaxError(f"Expected IDENTIFIER in Vl, but found {self.current_token.type.name}: {self.current_token.value}")
         
         id_token = self.match(TokenType.IDENTIFIER)
-        id_node = ASTNode('identifier', id_token.value)
+        id_node = ASTNode(f"<ID:{id_token.value}>")
         
         if self.check(TokenType.PUNCTUATION, ','):
             id_nodes = [id_node]
@@ -486,7 +486,7 @@ class RPALParser:
                 if not self.check(TokenType.IDENTIFIER):
                     raise SyntaxError(f"Expected IDENTIFIER after ',', but found {self.current_token.type.name}: {self.current_token.value}")
                 next_id_token = self.match(TokenType.IDENTIFIER)
-                id_nodes.append(ASTNode('identifier', next_id_token.value))
+                id_nodes.append(ASTNode(f"<ID:{next_id_token.value}>"))
             
             comma_node = ASTNode(',')
             for node in id_nodes:

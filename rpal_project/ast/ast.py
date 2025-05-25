@@ -24,7 +24,7 @@ class ASTNode:
     
     def print_tree(self, indent=0):
         """Print the AST in a readable format"""
-        prefix = '  ' * indent
+        prefix = '.' * indent
         print(f"{prefix}{self.type}", end='')
         if self.value is not None:
             print(f": {self.value}")
