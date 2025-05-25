@@ -1,0 +1,39 @@
+# General
+.DS_Store
+*.swp
+*.swo
+*~
+Thumbs.db
+.env
+.venv
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.so
+.Python
+build/
+dist/
+venv/
+env/
+.pytest_cache/
+
+
+
+
+
+# IDE-specific (VSCode, PyCharm, etc.)
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Build systems
+Makefile
+CMakeCache.txt
+CMakeFiles/
+*.cmake
+
