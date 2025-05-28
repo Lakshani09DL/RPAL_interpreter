@@ -2,6 +2,7 @@ import sys
 from lexer.lexical_analyzer import tokenize
 from parser.parser import RPALParser  
 from ast.ast import ASTNode 
+#from standardizer.standardizer import standardize_ast, print_st
 
 def main():
     if len(sys.argv) != 3:
@@ -29,7 +30,7 @@ def main():
             #from cse_machine import evaluate  # if you have a CSE machine module
             #result = evaluate(ast_root)
             #print(result)
-            from standardizer.standardizer import standardize
+            from standardizer.standardizer1 import standardize
             standardized_ast = standardize(ast_root)
 
             print("Standardized AST:")
