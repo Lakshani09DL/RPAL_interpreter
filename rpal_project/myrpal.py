@@ -30,7 +30,7 @@ def main():
             #from cse_machine import evaluate  # if you have a CSE machine module
             #result = evaluate(ast_root)
             #print(result)
-            from standardizer.standardizer1 import standardize
+            from standardizer.standardizer import standardize
             standardized_ast = standardize(ast_root)
 
             print("Standardized AST:")
