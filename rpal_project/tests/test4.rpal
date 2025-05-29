@@ -1,0 +1,5 @@
+let f x v = x aug v
+and(x, y = 1, 1
+  within p (r,s) = s eq 1 -> r+x | r+y
+)
+in f nil (p (1,2))

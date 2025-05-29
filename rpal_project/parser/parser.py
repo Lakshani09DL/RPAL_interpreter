@@ -292,7 +292,7 @@ class RPALParser:
             id_token = self.match(TokenType.IDENTIFIER)
             at_node = ASTNode('@')
             at_node.add_child(r_node)
-            id_node = ASTNode('identifier', id_token.value)
+            id_node = ASTNode(f"<ID:{id_token.value}>")
             at_node.add_child(id_node)
             next_r_node = self.parse_R()
             at_node.add_child(next_r_node)
