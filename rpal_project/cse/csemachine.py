@@ -387,7 +387,7 @@ def print_control_structures(controlStruc):
             if isinstance(item, Lambda):
                 print(f"  lambda {item.boundedVar} -> {item.number}")
             elif isinstance(item, Tau):
-                print(f"  tau({item.size})")
+                print(f"  tau({item.number})")
             elif isinstance(item, Condition):
                 print(f"  condition {item.number}")
             else:
