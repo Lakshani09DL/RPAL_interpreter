@@ -1,7 +1,7 @@
 class Lambda:
     def __init__(self, number):
         self.number = number
-        self.boundedVari = None
+        self.boundedVar = None
         self.environment = None
     def addEnvironment(self, environment):
         self.environment = environment
@@ -16,7 +16,7 @@ class Condition:
 class YStar:
     def __init__(self, number):
         self.number = number
-        self.boundedVari = None
+        self.boundedVar = None
         self.environment = None 
         
 class Stack:
@@ -44,7 +44,7 @@ class Stack:
         if not self.Empty():
             return self.stack.pop()
 
-    # Check whether the stack is empty.
+    
     def Empty(self):
         return len(self.stack) == 0    
        

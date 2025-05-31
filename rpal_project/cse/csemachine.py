@@ -31,9 +31,9 @@ def buildControlStructure(root_node, index):
                 bounded_vars = []
                 for arg_node in lambda_node.children:
                     bounded_vars.append(arg_node.type[4:-1])
-                new_lambda.boundedVari = ",".join(bounded_vars)
+                new_lambda.boundedVar = ",".join(bounded_vars)
             else:
-                new_lambda.boundedVari = lambda_node.type[4:-1]
+                new_lambda.boundedVar = lambda_node.type[4:-1]
 
             controlStruc[index].append(new_lambda)
 
@@ -187,7 +187,7 @@ def ApplyRules():
         # Rule 2
         elif type(latter) == Lambda:
             tempary = Lambda(latter.number)
-            tempary.boundedVari = latter.boundedVari
+            tempary.boundedVar = latter.boundedVar
             tempary.addEnvironment(currentEnv)
             stack.push(tempary)
 
@@ -200,7 +200,7 @@ def ApplyRules():
                 # Rule 11: If it's a Lambda
                 case Lambda():
 
-                    boundedVari = stack_latter_1.boundedVari
+                    boundedVar = stack_latter_1.boundedVar
                     lambda_number = stack_latter_1.number
                     parent_environment_number = stack_latter_1.environment
                     currentEnv = len(environments)
@@ -212,7 +212,7 @@ def ApplyRules():
                     environments.append(child)
 
                     # Rule 11: Binding variables
-                    variablesL = boundedVari.split(",")
+                    variablesL = boundedVar.split(",")
 
                     if len(variablesL) > 1:
                         i = 0
@@ -220,7 +220,7 @@ def ApplyRules():
                             child.addVar(variablesL[i], stack_latter_2[i])
                             i += 1
                     else:
-                        child.addVar(boundedVari, stack_latter_2)
+                        child.addVar(boundedVar, stack_latter_2)
 
                     stack.push(child.name)
                     control.append(child.name)
@@ -233,14 +233,14 @@ def ApplyRules():
                 # Rule 12: If it's "Y*"
                 case "Y*":
                     tempary = YStar(stack_latter_2.number)
-                    tempary.boundedVari = stack_latter_2.boundedVari
+                    tempary.boundedVar = stack_latter_2.boundedVar
                     tempary.environment = stack_latter_2.environment
                     stack.push(tempary)
 
                 # Rule 13: If it's a YStar instance
                 case YStar():
                     tempary = Lambda(stack_latter_1.number)
-                    tempary.boundedVari = stack_latter_1.boundedVari
+                    tempary.boundedVar = stack_latter_1.boundedVar
                     tempary.environment = stack_latter_1.environment
                     
                     control.append("gamma")
@@ -347,7 +347,7 @@ def ApplyRules():
 
     # Lambda expression becomes a lambda closure when its environment is determined.
     if type(stack[0]) == Lambda:
-        stack[0] = "[lambda closure: " + str(stack[0].boundedVari) + ": " + str(stack[0].number) + "]"
+        stack[0] = "[lambda closure: " + str(stack[0].boundedVar) + ": " + str(stack[0].number) + "]"
          
     if type(stack[0]) == tuple:          
          
@@ -385,7 +385,7 @@ def print_control_structures(controlStruc):
         print(f"\nControl Structure [{i}]:")
         for item in cs:
             if isinstance(item, Lambda):
-                print(f"  lambda {item.boundedVari} -> {item.number}")
+                print(f"  lambda {item.boundedVar} -> {item.number}")
             elif isinstance(item, Tau):
                 print(f"  tau({item.size})")
             elif isinstance(item, Condition):
