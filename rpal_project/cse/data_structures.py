@@ -20,8 +20,7 @@ class YStar:
         self.environment = None 
         
 class Stack:
-    def __init__(self, type):
-        self.type = type
+    def __init__(self):
         self.stack = []      
     
     def __getitem__(self, index):
