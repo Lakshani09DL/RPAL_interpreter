@@ -1,7 +1,7 @@
 class Lambda:
     def __init__(self, number):
         self.number = number
-        self.boundedVar = None
+        self.boundedVari = None
         self.environment = None
     def addEnvironment(self, environment):
         self.environment = environment
@@ -16,7 +16,7 @@ class Condition:
 class YStar:
     def __init__(self, number):
         self.number = number
-        self.boundedVar = None
+        self.boundedVari = None
         self.environment = None 
         
 class Stack:

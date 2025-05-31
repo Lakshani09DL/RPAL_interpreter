@@ -338,19 +338,19 @@ class RPALParser:
         
         elif self.check(TokenType.KEYWORD, 'true'):
             self.match(TokenType.KEYWORD, 'true')
-            return ASTNode('true')
+            return ASTNode('<true>')
         
         elif self.check(TokenType.KEYWORD, 'false'):
             self.match(TokenType.KEYWORD, 'false')
-            return ASTNode('false')
+            return ASTNode('<false>')
         
         elif self.check(TokenType.KEYWORD, 'nil'):
             self.match(TokenType.KEYWORD, 'nil')
-            return ASTNode('nil')
+            return ASTNode('<nil>')
         
         elif self.check(TokenType.KEYWORD, 'dummy'):
             self.match(TokenType.KEYWORD, 'dummy')
-            return ASTNode('dummy')
+            return ASTNode('<dummy>')
         
         elif self.check(TokenType.PUNCTUATION, '('):
             self.match(TokenType.PUNCTUATION, '(')

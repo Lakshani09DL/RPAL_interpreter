@@ -65,7 +65,7 @@ def buildControlStructure(root_node, index):
             for general_child in root_node.children:
                 buildControlStructure(general_child, index)
 
-def lookup(token_name):
+def parse_token(token_name):
     trimmed_name = token_name[1:-1]
     parts = trimmed_name.split(":")
 
@@ -88,11 +88,24 @@ def lookup(token_name):
                     exit(1)
 
             case "STR":
-                # Emulate RPAL behavior for string literals
                 return value
 
 
-    # Fallbacks for single-part tokens or untyped cases
+    
+    match value:
+        case "Y*":
+            return "Y*"
+        case "true":
+            return True
+        case "false":
+            return False
+        case "nil":
+            return ()
+        case _:
+            return value
+
+
+def convert_value(value):
     match value:
         case "Y*":
             return "Y*"
@@ -152,7 +165,7 @@ def built(function, argument):
                 exit()
 
 
-def useRuals():
+def ApplyRules():
     uop = ["neg", "not"]
     op = ["+", "-", "*", "/", "**", "gr", "ge", "ls", "le", "eq", "ne", "or", "&", "aug"]
     
@@ -166,7 +179,10 @@ def useRuals():
 
         # Rule 1
         if type(latter) == str and (latter[-1] == ">" and latter[0] == "<" ):
-            stack.push(lookup(latter))
+            stack.push(parse_token(latter))
+        
+
+    
 
         # Rule 2
         elif type(latter) == Lambda:
@@ -334,7 +350,7 @@ def useRuals():
         stack[0] = "[lambda closure: " + str(stack[0].boundedVari) + ": " + str(stack[0].number) + "]"
          
     if type(stack[0]) == tuple:          
-        # The rpal.exe program prints the boolean values in lowercase. Our code must emulate this behaviour. 
+         
         i = 0
         while i < len(stack[0]):
             if type(stack[0][i]) == bool:
@@ -344,8 +360,7 @@ def useRuals():
             i += 1
 
                 
-        # The rpal.exe program does not print the comma when there is only one element in the tuple.
-        # Our code must emulate this behaviour.  
+          
         match len(stack[0]):
             case 1:
                 stack[0] = "(" + str(stack[0][0]) + ")"
@@ -364,54 +379,6 @@ def useRuals():
     if stack[0] == True or stack[0] == False:
         stack[0] = str(stack[0]).lower()
 
-# The following function is called from the myrpal.py file.
-def built(func_name, arg_value):
-    global print_present
-
-    match func_name:
-        case "Order":
-            result = len(arg_value)
-            stack.push(result)
-
-        case "Print" | "print":
-            print_present = True
-            if isinstance(arg_value, str):
-                arg_value = arg_value.replace("\\n", "\n").replace("\\t", "\t")
-            stack.push(arg_value)
-
-        case "Stern":
-            stack.push(arg_value[1:])
-
-        case "Stem":
-            stack.push(arg_value[0])
-
-        case "Conc":
-            second_str = stack.pop()
-            control.pop()
-            result = arg_value + second_str
-            stack.push(result)
-
-        case "Istruthvalue":
-            stack.push(isinstance(arg_value, bool))
-
-        case "Isstring":
-            stack.push(isinstance(arg_value, str))
-
-        case "Isinteger":
-            stack.push(isinstance(arg_value, int))
-
-        case "Isfunction":
-            return arg_value in builtInFunctions
-
-        case "Istuple":
-            stack.push(isinstance(arg_value, tuple))
-
-        case "ItoS":
-            if isinstance(arg_value, int):
-                stack.push(str(arg_value))
-            else:
-                print("Error: ItoS function can only accept integers.")
-                exit()
 
 def print_control_structures(controlStruc):
     for i, cs in enumerate(controlStruc):
@@ -430,10 +397,11 @@ def Result(standardized_tree):
     global control
     buildControlStructure(standardized_tree, 0)
     print_control_structures(controlStruc)
+    control.append(environments[0].name)
     control += controlStruc[0]
-    print("Control structure at index 0:")
-    for item in controlStruc[0]:
-       print(item)
-    useRuals()
+    
+    ApplyRules()
+    stack.push(environments[0].name)
+
     if print_present:
         return stack[0]
