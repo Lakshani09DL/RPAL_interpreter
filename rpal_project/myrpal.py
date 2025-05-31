@@ -31,10 +31,14 @@ def main():
             #result = evaluate(ast_root)
             #print(result)
             from standardizer.standardizer import standardize
-            standardized_ast = standardize(ast_root)
+            from cse.csemachine import Result
 
-            print("Standardized AST:")
-            standardized_ast.print_tree()
+            standardized_ast = standardize(ast_root)
+            results=Result(standardized_ast)
+            print(results)
+ 
+            #print("Standardized AST:")
+            #standardized_ast.print_tree()
         else:
             print("Error: Invalid mode. Use -ast or -eval.")
             sys.exit(1)

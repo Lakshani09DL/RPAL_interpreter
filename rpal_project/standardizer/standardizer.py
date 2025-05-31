@@ -6,14 +6,14 @@ class Standardizer:
             self.standardize(child)
 
         match node.type:
-            case 'let' if node.children[0].type == 'eq':
+            case 'let' if node.children[0].type == '=':
                 equal_node, p = node.children
                 x, e = equal_node.children
                 lambda_node = ASTNode('lambda', children=[x, p])
                 node.type = 'gamma'
                 node.children = [lambda_node, e]
 
-            case 'where' if node.children[1].type == 'eq':
+            case 'where' if node.children[1].type == '=':
                 p, equal_node = node.children
                 x, e = equal_node.children
                 lambda_node = ASTNode('lambda', children=[x, p])
@@ -26,7 +26,7 @@ class Standardizer:
                 e = node.children[-1]
                 for p in reversed(params):
                     e = ASTNode('lambda', children=[p, e])
-                node.type = 'eq'
+                node.type = '='
                 node.children = [f, e]
 
             case 'gamma' if len(node.children) > 2:
@@ -39,13 +39,13 @@ class Standardizer:
                     current = lambda_node
                 current.children.append(expr)
 
-            case 'within' if node.children[0].type == node.children[1].type == 'equal':
+            case 'within' if node.children[0].type == node.children[1].type == '=':
                 eq1, eq2 = node.children
                 x1, e1 = eq1.children
                 x2, e2 = eq2.children
                 lambda_node = ASTNode('lambda', children=[x1, e2])
                 gamma_node = ASTNode('gamma', children=[lambda_node, e1])
-                node.type = 'eq'
+                node.type = '='
                 node.children = [x2, gamma_node]
 
             case '@':
@@ -62,18 +62,18 @@ class Standardizer:
                     x, e = eq.children
                     vars.append(x)
                     exprs.append(e)
-                comma_node = ASTNode('comma', children=vars)
+                comma_node = ASTNode(',', children=vars)
                 tau_node = ASTNode('tau', children=exprs)
-                node.type = 'eq'
+                node.type = '='
                 node.children = [comma_node, tau_node]
 
             case 'rec':
                 eq = node.children[0]
                 x, e = eq.children
                 lambda_node = ASTNode('lambda', children=[x, e])
-                ystar_node = ASTNode('Y')
+                ystar_node = ASTNode('<Y*>')
                 gamma_node = ASTNode('gamma', children=[ystar_node, lambda_node])
-                node.type = 'eq'
+                node.type = '='
                 node.children = [x, gamma_node]
 
             case 'lambda' if len(node.children) > 2:

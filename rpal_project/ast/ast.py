@@ -21,7 +21,7 @@ class ASTNode:
             result += child.to_string(level + 1)
         
         return result
-    
+    '''
     def print_tree(self, indent=0):
         """Print the AST in a readable format"""
         prefix = '.' * indent
@@ -32,4 +32,13 @@ class ASTNode:
             print()
         
         for child in self.children:
-            child.print_tree(indent + 1)
+            child.print_tree(indent + 1)'''
+    
+
+    def print_tree(self, indent=0):
+      """Print the AST in a readable format (only type, no value)"""
+      prefix = '.' * indent
+      print(f"{prefix}{self.type}")
+    
+      for child in self.children:
+        child.print_tree(indent + 1)
