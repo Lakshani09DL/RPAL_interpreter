@@ -1,3 +1,4 @@
+#Represents lambda expressions with bound variables
 class Lambda:
     def __init__(self, number):
         self.number = number
@@ -5,13 +6,17 @@ class Lambda:
         self.environment = None
     def addEnvironment(self, environment):
         self.environment = environment
+
+# Tuple construction handling
 class Tau:
     def __init__(self, number):
         self.number = number
         
+# Handle -> nodes
 class Condition:
     def __init__(self, number):
         self.number = number
+
 
 class YStar:
     def __init__(self, number):

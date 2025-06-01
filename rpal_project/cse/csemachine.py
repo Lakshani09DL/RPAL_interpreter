@@ -3,8 +3,8 @@ from cse.environment import Environment
 from cse.data_structures import *
 
 
-control = []
-controlStruc = []
+control = [] #Stack that holds the current execution instructions
+controlStruc = [] #Stores control structures (lambda, tau, conditions)
 count = 0
 environments = [Environment(0)]
 stack = Stack()                        
@@ -118,6 +118,7 @@ def convert_value(value):
         case _:
             return value
 
+# Built-in function handling
 def built(function, argument):
     global print_present
 
@@ -164,7 +165,7 @@ def built(function, argument):
                 print("Error: ItoS function can only accept integers.")
                 exit()
 
-
+#Implements the CSE machine's 13 rules through pattern matching
 def ApplyRules():
     uop = ["neg", "not"]
     op = ["+", "-", "*", "/", "**", "gr", "ge", "ls", "le", "eq", "ne", "or", "&", "aug"]
