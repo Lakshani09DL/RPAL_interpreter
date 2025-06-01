@@ -376,11 +376,11 @@ def ApplyRules():
                     stack[0] = tempary
 
                 
-    # The rpal.exe program prints the boolean values in lowercase. Our code must emulate this behaviour.    
+        
     if stack[0] == True or stack[0] == False:
         stack[0] = str(stack[0]).lower()
 
-
+# For debugging purposes
 def print_control_structures(controlStruc):
     for i, cs in enumerate(controlStruc):
         print(f"\nControl Structure [{i}]:")
