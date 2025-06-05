@@ -292,7 +292,7 @@ class RPALParser:
             id_token = self.match(TokenType.IDENTIFIER)
             at_node = ASTNode('@')
             at_node.add_child(r_node)
-            id_node = ASTNode('identifier', id_token.value)
+            id_node = ASTNode(type_name=f"<ID:{id_token.value}>",value=id_token.value)
             at_node.add_child(id_node)
             next_r_node = self.parse_R()
             at_node.add_child(next_r_node)
@@ -324,33 +324,33 @@ class RPALParser:
         """Parse Rn production"""
         if self.check(TokenType.IDENTIFIER):
             id_token = self.match(TokenType.IDENTIFIER)
-            return ASTNode(f"<ID:{id_token.value}>")
+            return ASTNode(type_name=f"<ID:{id_token.value}>", value= id_token.value)
         
         elif self.check(TokenType.INTEGER):
             int_token = self.match(TokenType.INTEGER)
-            return ASTNode(f"<INT:{int_token.value}>")
+            return ASTNode(type_name=f"<INT:{int_token.value}>",value= int_token.value)
         
         elif self.check(TokenType.STRING):
             str_token = self.match(TokenType.STRING)
             # Remove the surrounding quotes from string literal
             string_value = str_token.value[1:-1]
-            return ASTNode(f'<STR:{string_value}>')
+            return ASTNode(type_name=f'<STR:{string_value}>',value=string_value)
         
         elif self.check(TokenType.KEYWORD, 'true'):
             self.match(TokenType.KEYWORD, 'true')
-            return ASTNode('true')
+            return ASTNode('<true>')
         
         elif self.check(TokenType.KEYWORD, 'false'):
             self.match(TokenType.KEYWORD, 'false')
-            return ASTNode('false')
+            return ASTNode('<false>')
         
         elif self.check(TokenType.KEYWORD, 'nil'):
             self.match(TokenType.KEYWORD, 'nil')
-            return ASTNode('nil')
+            return ASTNode('<nil>')
         
         elif self.check(TokenType.KEYWORD, 'dummy'):
             self.match(TokenType.KEYWORD, 'dummy')
-            return ASTNode('dummy')
+            return ASTNode('<dummy>')
         
         elif self.check(TokenType.PUNCTUATION, '('):
             self.match(TokenType.PUNCTUATION, '(')
@@ -421,7 +421,7 @@ class RPALParser:
                 e_node = self.parse_E()
                 
                 fcn_node = ASTNode('fcn_form')
-                id_node = ASTNode(f"<ID:{id_token.value}>")
+                id_node = ASTNode(type_name=f"<ID:{id_token.value}>",value=id_token.value)
                 fcn_node.add_child(id_node)
                 
                 for vb_node in vb_nodes:
@@ -455,7 +455,7 @@ class RPALParser:
         """Parse Vb production"""
         if self.check(TokenType.IDENTIFIER):
             id_token = self.match(TokenType.IDENTIFIER)
-            return ASTNode(f"<ID:{id_token.value}>")
+            return ASTNode(type_name=f"<ID:{id_token.value}>",value=id_token.value)
         
         elif self.check(TokenType.PUNCTUATION, '('):
             self.match(TokenType.PUNCTUATION, '(')
@@ -476,7 +476,7 @@ class RPALParser:
             raise SyntaxError(f"Expected IDENTIFIER in Vl, but found {self.current_token.type.name}: {self.current_token.value}")
         
         id_token = self.match(TokenType.IDENTIFIER)
-        id_node = ASTNode(f"<ID:{id_token.value}>")
+        id_node = ASTNode(type_name=f"<ID:{id_token.value}>",value=id_token.value)
         
         if self.check(TokenType.PUNCTUATION, ','):
             id_nodes = [id_node]

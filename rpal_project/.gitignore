@@ -32,7 +32,7 @@ env/
 *.iws
 
 # Build systems
-Makefile
+
 CMakeCache.txt
 CMakeFiles/
 *.cmake
