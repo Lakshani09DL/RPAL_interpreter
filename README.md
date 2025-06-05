@@ -19,6 +19,6 @@ python myrpal.py -ast path/to/program.rpal
 ### 2. **ST Generation**
 To generate and print the ST of a `.rpal` file:
 ```bash
-python myrpal.py -eval path/to/program.rpal
+python main.py -st path/to/program.rpal
 
 
