@@ -7,6 +7,7 @@ def main():
     if len(sys.argv) not in [2, 3]:
         print("Usage:")
         print("  python myrpal.py -ast <source_file.rpal>")
+        print("  python myrpal.py -st <source_file.rpal>")
         print("  python myrpal.py <source_file.rpal>")
         sys.exit(1)
 
@@ -14,8 +15,10 @@ def main():
     if len(sys.argv) == 3:
         mode = sys.argv[1]
         file_path = sys.argv[2]
-        if mode != "-ast":
-            print("Error: Invalid mode. Use '-ast' or no switch.")
+        #if mode != "-ast":
+            #print("Error: Invalid mode. Use '-ast' or no switch.")
+        if mode not in ["-ast", "-st"]:
+            print("Error: Invalid mode. Use '-ast', '-st', or no switch.")
             sys.exit(1)
     else:
         mode = "eval"
@@ -53,6 +56,23 @@ def main():
                
 
             print(f"[✔] AST written to {output_path}")
+        elif mode == "-st":
+            from standardizer.standardizer import standardize
+    
+            # Create 'outputs/' directory if it doesn't exist
+            os.makedirs("outputs", exist_ok=True)
+    
+            # Extract base name of the file for output naming
+            base_filename = os.path.basename(file_path).replace(".rpal", "")
+            output_path = f"outputs/st_{base_filename}.txt"
+    
+            # Standardize the AST
+            standardized_ast = standardize(ast_root)
+            standardized_ast.print_tree()  # Print standardized tree to console
+    
+            
+    
+    
         else:
             from standardizer.standardizer import standardize
             from cse.csemachine import Result
