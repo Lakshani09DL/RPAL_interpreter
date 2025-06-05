@@ -15,6 +15,12 @@ To generate and print the AST of a `.rpal` file:
 ```bash
 python myrpal.py -ast path/to/program.rpal
 ```
+Prints the AST in RPAL format to the terminal.
+Saves a copy to:
+```bash
+outputs/ast_<filename>.txt
+```
+
 ### 2. **Evaluation (Default Mode)**
 To evaluate a .rpal program and print the output:
 ```bash
