@@ -15,10 +15,23 @@ To generate and print the AST of a `.rpal` file:
 ```bash
 python myrpal.py -ast path/to/program.rpal
 ```
+### 2. **Evaluation (Default Mode)**
+To evaluate a .rpal program and print the output:
+```bash
+python myrpal.py path/to/program.rpal
+```
 
-### 2. **ST Generation**
+### 3. **ST Generation**
 To generate and print the ST of a `.rpal` file:
 ```bash
 python main.py -st path/to/program.rpal
+```
 
-
+## Makfile Usage
+Use the provided Makefile to simplify running tests:
+```bash
+make ast FILE=tests/test1.rpal   # Show AST for a test file
+make run FILE=tests/test1.rpal   # Evaluate and show output
+make test                        # Run all test files in /tests
+make clean                       # Clean up temporary files
+```
