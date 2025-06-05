@@ -273,8 +273,8 @@ def ApplyRules():
         elif (latter in op):
             rand_1 = stack.pop()
             rand_2 = stack.pop()
-            print("DEBUG: rand_1 =", rand_1, "| type:", type(rand_1))
-            print("DEBUG: rand_2 =", rand_2, "| type:", type(rand_2))
+            #print("DEBUG: rand_1 =", rand_1, "| type:", type(rand_1))
+            #print("DEBUG: rand_2 =", rand_2, "| type:", type(rand_2))
 
             match latter:
                 case "+":
@@ -397,7 +397,7 @@ def print_control_structures(controlStruc):
 def Result(standardized_tree):
     global control
     buildControlStructure(standardized_tree, 0)
-    print_control_structures(controlStruc)
+    #print_control_structures(controlStruc)
     control.append(environments[0].name)
     control += controlStruc[0]
     
