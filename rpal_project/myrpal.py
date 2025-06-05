@@ -1,7 +1,8 @@
 import sys
 from lexer.lexical_analyzer import tokenize
 from parser.parser import RPALParser
-
+from contextlib import redirect_stdout
+import os
 def main():
     if len(sys.argv) not in [2, 3]:
         print("Usage:")
@@ -35,7 +36,23 @@ def main():
         ast_root = parser.parse()
 
         if mode == "-ast":
+            
+            # Create 'outputs/' directory if it doesn't exist
+            os.makedirs("outputs", exist_ok=True)
+
+            # Extract base name of the file for output naming
+            base_filename = os.path.basename(file_path).replace(".rpal", "")
+            output_path = f"outputs/ast_{base_filename}.txt"
+
             ast_root.print_tree()  # AST printing
+
+            # Write AST to file
+            with open(output_path, "w") as f:
+                with redirect_stdout(f):
+                   ast_root.print_tree()
+               
+
+            print(f"[✔] AST written to {output_path}")
         else:
             from standardizer.standardizer import standardize
             from cse.csemachine import Result
